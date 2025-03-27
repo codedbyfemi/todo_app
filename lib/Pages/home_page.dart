@@ -77,11 +77,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   // C O M P L E T E   T A S K
-  // void done(int index) {
-  //   setState(() {
-  //     checkBoxChanged( , index);
-  //   });
-  // }
+  void editTask(int index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogBox(
+          controller: _controller,
+          onSave: () {
+            setState(() {
+              if (_controller.text.isEmpty) {
+                Navigator.pop;
+              } else {
+                db.todoList[index][0] = _controller.text;
+              }
+            });
+            Navigator.pop(context);
+            _controller.clear();
+            db.updateDataBase();
+          },
+          onCancel: () => Navigator.pop(context),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +123,7 @@ class _HomePageState extends State<HomePage> {
             taskCompleted: db.todoList[index][1],
             onChanged: (value) => checkBoxChanged(value, index),
             deleteTask: (context) => delete(index),
-            completeTask:
-                (context) => checkBoxChanged(!db.todoList[index][1], index),
+            editTask: (context) => editTask(index),
           );
         },
       ),
