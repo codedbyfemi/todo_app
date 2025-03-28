@@ -1,6 +1,6 @@
 # todo_app
 
-A new Flutter project.
+A new Flutter project. A personal project built based on Mitch Koko's
 
 ## Getting Started
 
